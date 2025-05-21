@@ -1,0 +1,7 @@
+2025-05-21 23:14:19,463 - JobAssistant - INFO - JobAssistant initialized
+2025-05-21 23:14:29,871 - JobAssistant - INFO - Ingesting resume from: C:\Users\MSI\AppData\Local\Temp\tmpzb9laacs.pdf
+2025-05-21 23:14:39,326 - JobAssistant - INFO - Resume ingestion completed successfully
+2025-05-21 23:15:01,259 - JobAssistant - INFO - Processing query: What skills am I missing?
+2025-05-21 23:15:01,260 - JobAssistant - INFO - Routing to general question handling
+2025-05-21 23:17:03,780 - JobAssistant - INFO - Processing query: How can I prepare for the interview?
+2025-05-21 23:17:03,782 - JobAssistant - INFO - Routing to interview preparation

@@ -29,7 +29,11 @@ class JobAssistant:
 
         # Initialize LLM model
         self.model = ChatOllama(model=model_name)
-        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
+        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000
+                                                            , chunk_overlap=300
+                                                            ,separators=["\n\n", "\n", " ", ""],
+                                                            length_function=len
+                                                            )
        
         # Document stores
         self.resume_store = None
