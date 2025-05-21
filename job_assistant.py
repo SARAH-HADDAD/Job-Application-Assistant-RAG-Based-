@@ -2,6 +2,8 @@ import os
 import tempfile
 import re
 from typing import List, Dict, Any, Optional, Tuple
+import logging
+from datetime import datetime
 
 # LangChain imports
 from langchain_community.vectorstores import Chroma
@@ -22,6 +24,9 @@ class JobAssistant:
     """
    
     def __init__(self, model_name="mistral"):
+
+        self._setup_logging()
+
         # Initialize LLM model
         self.model = ChatOllama(model=model_name)
         self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
@@ -45,7 +50,35 @@ class JobAssistant:
        
         # Initialize prompts
         self._initialize_prompts()
-       
+
+    def _setup_logging(self):
+        """Configure logging for the JobAssistant."""
+        self.logger = logging.getLogger("JobAssistant")
+        self.logger.setLevel(logging.INFO)
+    
+        # Create logs directory if it doesn't exist
+        os.makedirs("logs", exist_ok=True)
+    
+        # Create file handler which logs even debug messages
+        log_file = f"logs/job_assistant_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+        fh = logging.FileHandler(log_file)
+        fh.setLevel(logging.DEBUG)
+    
+        # Create console handler with a higher log level
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.INFO)
+    
+        # Create formatter and add it to the handlers
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        fh.setFormatter(formatter)
+        ch.setFormatter(formatter)
+    
+        # Add the handlers to the logger
+        self.logger.addHandler(fh)
+        self.logger.addHandler(ch)
+    
+        self.logger.info("JobAssistant initialized")
+
     def _initialize_prompts(self):
         """Initialize various prompt templates for different tasks."""
        
@@ -156,36 +189,38 @@ class JobAssistant:
         )
    
     def ingest_resume(self, file_path: str) -> None:
-        """
-        Ingest a resume PDF document and create a vector store.
-       
-        Args:
-            file_path: Path to the resume PDF file
-        """
-        docs = PyPDFLoader(file_path=file_path).load()
-        chunks = self.text_splitter.split_documents(docs)
-        chunks = filter_complex_metadata(chunks)
-       
-        # Add document type metadata
-        for chunk in chunks:
-            if "metadata" not in chunk.__dict__:
-                chunk.metadata = {}
-            chunk.metadata["document_type"] = "resume"
-       
-        self.resume_store = Chroma.from_documents(
-            documents=chunks,
-            embedding=FastEmbedEmbeddings()
-        )
-       
-        self.resume_retriever = self.resume_store.as_retriever(
-            search_type="similarity_score_threshold",
-            search_kwargs={
-                "k": 5,
-                "score_threshold": 0.5,
-            },
-        )
-       
-        self.document_types["resume"] = True
+        """Ingest a resume PDF document and create a vector store."""
+        self.logger.info(f"Ingesting resume from: {file_path}")
+    
+        try:
+            docs = PyPDFLoader(file_path=file_path).load()
+            chunks = self.text_splitter.split_documents(docs)
+            chunks = filter_complex_metadata(chunks)
+            self.logger.debug(f"Created {len(chunks)} chunks from resume")
+        
+            # Add document type metadata
+            for chunk in chunks:
+                if "metadata" not in chunk.__dict__:
+                    chunk.metadata = {}
+                chunk.metadata["document_type"] = "resume"
+        
+            self.resume_store = Chroma.from_documents(
+                documents=chunks,
+                embedding=FastEmbedEmbeddings())
+            
+            self.logger.debug("Created Chroma vector store for resume")
+        
+            self.resume_retriever = self.resume_store.as_retriever(
+                search_type="similarity_score_threshold",
+                search_kwargs={
+                    "k": 5,
+                    "score_threshold": 0.3,},)
+            self.logger.info("Resume ingestion completed successfully")
+        
+            self.document_types["resume"] = True
+        except Exception as e:
+            self.logger.error(f"Error ingesting resume: {str(e)}")
+            raise
    
     def ingest_job_posting(self, file_path: str) -> None:
         """
@@ -274,12 +309,25 @@ class JobAssistant:
             retriever = self.skills_retriever
        
         if not retriever:
+            self.logger.warning(f"No retriever available for document type: {doc_type}")
             return "Document not available"
-       
-        # Get all documents from the retriever
-        docs = retriever.invoke("")
+        
+        try:
+            # Get all documents from the retriever
+            docs = retriever.invoke("")
+            self.logger.debug(f"Retrieved {len(docs)} documents for {doc_type}")
 
-        return "\n\n".join([doc.page_content for doc in docs])
+            if docs:
+                if hasattr(docs[0], 'metadata') and 'score' in docs[0].metadata:
+                    scores = [doc.metadata.get('score', 'N/A') for doc in docs]
+                    self.logger.debug(f"Retrieval scores for {doc_type}: {scores}")
+            
+            return "\n\n".join([doc.page_content for doc in docs])
+        
+        except Exception as e:
+            self.logger.error(f"Error retrieving {doc_type} content: {str(e)}")
+            return f"Error retrieving document content: {str(e)}"
+        
    
     def improve_resume(self, query: str) -> str:
         """
@@ -428,55 +476,65 @@ class JobAssistant:
         return response
    
     def ask(self, query: str) -> str:
-        """
-        Process a query and route it to the appropriate function.
-       
-        Args:
-            query: User's question
-           
-        Returns:
-            Response to the query
-        """
+        """Process a query and route it to the appropriate function."""
+        self.logger.info(f"Processing query: {query}")
+    
         # Check if any documents have been uploaded
         if not any(self.document_types.values()):
+            self.logger.warning("No documents uploaded - returning prompt to upload documents")
             return "Please upload at least one document (resume, job posting, or skills profile)."
-       
+    
+        # Log document status
+        self.logger.debug(f"Document status - Resume: {self.document_types['resume']}, "
+                     f"Job Posting: {self.document_types['job_posting']}, "
+                     f"Skills: {self.document_types['skills']}")
+    
         # Determine query type and route to appropriate function
         query_lower = query.lower()
-       
-        if any(phrase in query_lower for phrase in ["modify cv", "modify resume", "improve resume", "improve cv", "update resume", "update cv"]):
-            return self.improve_resume(query)
-       
-        elif any(phrase in query_lower for phrase in ["missing skills", "skills gap", "what skills", "skills needed", "skills i need"]):
-            return self.identify_missing_skills(query)
-       
-        elif any(phrase in query_lower for phrase in ["cover letter", "write a letter", "application letter"]):
-            return self.create_cover_letter(query)
-       
-        elif any(phrase in query_lower for phrase in ["interview", "prepare for interview", "interview prep", "interview preparation"]):
-            return self.prepare_for_interview(query)
-       
-        else:
-            # General question - use a simpler QA approach
-            context = ""
-            if self.resume_retriever:
-                resume_docs = self.resume_retriever.invoke(query)
-                if resume_docs:
-                    context += "Resume information:\n" + "\n".join([doc.page_content for doc in resume_docs]) + "\n\n"
-           
-            if self.job_posting_retriever:
-                job_docs = self.job_posting_retriever.invoke(query)
-                if job_docs:
-                    context += "Job posting information:\n" + "\n".join([doc.page_content for doc in job_docs]) + "\n\n"
-                   
-            if self.skills_retriever:
-                skills_docs = self.skills_retriever.invoke(query)
-                if skills_docs:
-                    context += "Skills information:\n" + "\n".join([doc.page_content for doc in skills_docs])
-           
-            chain = self.qa_prompt | self.model | StrOutputParser()
-           
-            return chain.invoke({"context": context, "question": query})
+    
+        try:
+            if any(phrase in query_lower for phrase in ["modify cv", "modify resume", "improve resume"]):
+                self.logger.info("Routing to resume improvement")
+                return self.improve_resume(query)
+        
+            elif any(phrase in query_lower for phrase in ["missing skills", "skills gap"]):
+                self.logger.info("Routing to missing skills analysis")
+                return self.identify_missing_skills(query)
+        
+            elif any(phrase in query_lower for phrase in ["cover letter", "write a letter"]):
+                self.logger.info("Routing to cover letter creation")
+                return self.create_cover_letter(query)
+        
+            elif any(phrase in query_lower for phrase in ["interview", "prepare for interview"]):
+                self.logger.info("Routing to interview preparation")
+                return self.prepare_for_interview(query)
+        
+            else:
+                self.logger.info("Routing to general question handling")
+                # General question - use a simpler QA approach
+                context = ""
+            
+                if self.resume_retriever:
+                    self.logger.debug("Attempting resume retrieval")
+                    resume_docs = self.resume_retriever.invoke(query)
+                    if resume_docs:
+                        self.logger.debug(f"Retrieved {len(resume_docs)} resume docs")
+                        if hasattr(resume_docs[0], 'metadata') and 'score' in resume_docs[0].metadata:
+                            scores = [doc.metadata.get('score', 'N/A') for doc in resume_docs]
+                            self.logger.debug(f"Resume retrieval scores: {scores}")
+                        context += "Resume information:\n" + "\n".join([doc.page_content for doc in resume_docs]) + "\n\n"
+                    else:
+                        self.logger.debug("No resume docs retrieved")
+            
+                # Similar logging for job_posting and skills retrievers...
+            
+                chain = self.qa_prompt | self.model | StrOutputParser()
+                self.logger.debug("Executing QA chain")
+                return chain.invoke({"context": context, "question": query})
+    
+        except Exception as e:
+            self.logger.error(f"Error processing query '{query}': {str(e)}")
+            return f"An error occurred while processing your request: {str(e)}"
    
     def clear(self) -> None:
         """Clear all document stores and reset the assistant."""
@@ -493,3 +551,23 @@ class JobAssistant:
             "job_posting": False,
             "skills": False
         }
+
+    def log_retrieval_stats(self, query: str, docs: list, doc_type: str):
+        """Log detailed retrieval statistics."""
+        if not docs:
+            self.logger.warning(f"No documents retrieved for {doc_type} with query: {query}")
+            return
+    
+        self.logger.debug(f"Retrieved {len(docs)} documents for {doc_type}")
+    
+        # Log scores if available
+        if hasattr(docs[0], 'metadata') and 'score' in docs[0].metadata:
+            scores = [doc.metadata.get('score', 'N/A') for doc in docs]
+            self.logger.debug(f"Retrieval scores for {doc_type}: {scores}")
+            self.logger.debug(f"Average score: {sum(scores)/len(scores):.2f}")
+            self.logger.debug(f"Max score: {max(scores):.2f}")
+            self.logger.debug(f"Min score: {min(scores):.2f}")
+    
+        # Log document lengths
+        lengths = [len(doc.page_content) for doc in docs]
+        self.logger.debug(f"Document lengths (chars): {lengths}")

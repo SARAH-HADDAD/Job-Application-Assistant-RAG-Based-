@@ -1,0 +1,3 @@
+2025-05-21 22:52:08,969 - JobAssistant - INFO - JobAssistant initialized
+2025-05-21 22:52:41,028 - JobAssistant - INFO - Processing query: What skills am I missing?
+2025-05-21 22:52:41,028 - JobAssistant - INFO - Routing to missing skills analysis

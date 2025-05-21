@@ -1,0 +1,9 @@
+2025-05-21 22:59:50,666 - JobAssistant - INFO - JobAssistant initialized
+2025-05-21 23:00:07,998 - JobAssistant - INFO - Ingesting resume from: C:\Users\MSI\AppData\Local\Temp\tmp3jk6dspr.pdf
+2025-05-21 23:00:12,586 - JobAssistant - INFO - Resume ingestion completed successfully
+2025-05-21 23:00:31,227 - JobAssistant - INFO - Processing query: What skills am I missing?
+2025-05-21 23:00:31,227 - JobAssistant - INFO - Routing to general question handling
+2025-05-21 23:01:44,002 - JobAssistant - INFO - Processing query: How should I modify my CV for this job?
+2025-05-21 23:01:44,004 - JobAssistant - INFO - Routing to general question handling
+2025-05-21 23:03:07,567 - JobAssistant - INFO - Processing query: what do you think about my profil
+2025-05-21 23:03:07,567 - JobAssistant - INFO - Routing to general question handling
