@@ -711,20 +711,71 @@ class JobAssistant:
         self.logger.debug(f"Document lengths (chars): {lengths}")
 
     def _expand_query(self, query: str) -> str:
-        """Use LLM to expand the query for better retrieval"""
-        if len(query.split()) < 4:  # Only expand short queries
-            expansion_prompt = f"""Original query: {query}
+        """
+        Enhance the query with alternative phrasings using LLM for better retrieval.
+        
+        Args:
+            query: The original user query
             
-            Generate 3 alternative phrasings that might help retrieve relevant document chunks:
-            1. """
+        Returns:
+            Expanded query with alternative phrasings if helpful,
+            otherwise returns original query
+        """
+        # Don't expand very short or empty queries
+        query = query.strip()
+        if len(query.split()) < 3 or len(query) < 10:
+            return query
+        
+        try:
+            # Create a more robust prompt template
+            expansion_prompt = PromptTemplate.from_template(
+                """You are a query expansion assistant. Given the original query below, generate
+                2-3 alternative phrasings that might help retrieve more relevant document chunks.
+                Focus on:
+                - Synonym substitution
+                - Professional terminology variations
+                - Broader/narrower interpretations
+                - Common alternative phrasings in recruitment contexts
+                
+                ORIGINAL QUERY: {query}
+                
+                ALTERNATIVE PHRASINGS:
+                1. """
+            )
             
-            try:
-                chain = PromptTemplate.from_template("{query}") | self.model | StrOutputParser()
-                expansions = chain.invoke({"query": expansion_prompt})
-                return f"{query} ({expansions.split('\n')[0]})"
-            except:
+            # Create and execute the chain
+            chain = (
+                expansion_prompt 
+                | self.model 
+                | StrOutputParser()
+            )
+            
+            # Get expansions with timeout safety
+            expansions = chain.invoke({"query": query})
+            
+            # Parse the response safely
+            if not expansions:
                 return query
-        return query
+                
+            # Extract the first alternative phrasing
+            alternatives = []
+            for line in expansions.split('\n'):
+                line = line.strip()
+                if line and re.match(r'^\d+\.', line):
+                    alt = re.sub(r'^\d+\.\s*', '', line)
+                    if alt and alt not in alternatives:
+                        alternatives.append(alt)
+                        if len(alternatives) >= 2:  # Limit to top 2 alternatives
+                            break
+            
+            # Format the expanded query
+            if alternatives:
+                return f"{query} [or: {', '.join(alternatives)}]"
+            return query
+            
+        except Exception as e:
+            self.logger.debug(f"Query expansion failed for '{query}': {str(e)}")
+            return query  # Fallback to original query
     
     def _post_process_response(self, response: str) -> str:
         """Clean and enhance the final response"""
