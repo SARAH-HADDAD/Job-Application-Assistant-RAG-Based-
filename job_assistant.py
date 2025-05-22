@@ -94,85 +94,92 @@ class JobAssistant:
         """Initialize various prompt templates for different tasks."""
         # Enhanced general QA prompt
         self.qa_prompt = PromptTemplate.from_template(
-            """As a professional career advisor with 10+ years experience, analyze the following 
-            context and provide a detailed, structured response to the question below.
-
-            CONTEXT:
-            {context}
-
-            QUESTION: 
-            {question}
-
-            RESPONSE GUIDELINES:
-            1. Be specific, concrete, and actionable
-            2. Use professional tone but remain approachable
-            3. Structure response with clear headings if longer than 3 sentences
-            4. Provide examples where relevant
-            5. If suggesting changes, explain the benefits
-            6. Maintain focus on practical career advice
-
-            WELL-STRUCTURED RESPONSE:"""
-        )
+    """As a professional career advisor, provide a response structured as follows:
+    
+    ### Summary
+    [1-2 sentence overview]
+    
+    ### Detailed Analysis
+    [Several paragraphs or bullet points]
+    
+    ### Recommendations
+    - Clear, actionable items
+    - Prioritized when possible
+    
+    ### Additional Resources (if applicable)
+    [Suggestions for further reading/learning]
+    
+    CONTEXT: {context}
+    
+    QUESTION: {question}
+    
+    Respond using professional but approachable tone, with markdown formatting."""
+)
        
         # Enhanced resume improvement prompt
         self.resume_improvement_prompt = PromptTemplate.from_template(
-            """As an executive resume writer (20+ years experience), analyze this resume against 
-            the job requirements and provide specific, actionable recommendations.
+    """As an executive resume writer, analyze this resume against the job requirements and provide 
+    specific, actionable recommendations. Structure your response EXACTLY as follows:
 
-            JOB REQUIREMENTS (Key Priorities):
-            {job_posting_context}
+    ### Executive Summary
+    [1-2 sentence overview of key improvement opportunities]
 
-            CURRENT RESUME CONTENT:
-            {resume_context}
+    ### Content Alignment
+    - **Missing Requirements**: [list 3-5 key items]
+    - **Experiences to Emphasize**: [list 3-5 items]
+    - **Quantifiable Achievements**: [suggest 2-3 metrics to add]
 
-            ADDITIONAL SKILLS:
-            {skills_context}
+    ### Keyword Optimization
+    - **Key Terms to Include**: [list 5-8 terms from job description]
+    - **Technical Skills Highlight**: [suggest 3-5 skills to feature]
 
-            USER REQUEST:
-            {question}
+    ### Structural Improvements
+    - **Section Reorganization**: [suggest 2-3 changes]
+    - **Visual Presentation**: [1-2 suggestions]
 
-            Provide recommendations covering these areas (use headings):
-            
-            [Content Alignment]
-            - Missing requirements to add
-            - Existing experiences to emphasize
-            - Quantifiable achievements to highlight
-            
-            [Keyword Optimization]
-            - Specific terms from job description to include
-            - Technical skills to feature more prominently
-            
-            [Structural Improvements]
-            - Sections to reorganize/restructure
-            - Visual presentation suggestions
-            
-            [Additional Notes]
-            - Any other observations"""
-        )
+    JOB REQUIREMENTS:
+    {job_posting_context}
+
+    CURRENT RESUME:
+    {resume_context}
+
+    USER REQUEST:
+    {question}
+
+    Provide only the structured response described above:"""
+)
  
 
         # Missing skills prompt
         self.missing_skills_prompt = PromptTemplate.from_template(
-            """You are an expert career advisor. Analyze the resume and job posting below to identify skills
-            the candidate is missing or should develop further for this particular job.
-           
-            Resume: {resume_context}
-           
-            Job Posting: {job_posting_context}
-           
-            Skills Profile: {skills_context}
-           
-            Question: {question}
-           
-            Provide a detailed analysis of:
-            1. Critical skills mentioned in the job posting that are missing from the resume
-            2. Skills that are present but need more emphasis or development
-            3. Technical skills gap assessment
-            4. Soft skills gap assessment
-            5. Recommendations for skill acquisition or improvement
-           
-            Answer:"""
-        )
+    """As a career expert, analyze these documents to identify skill gaps. Structure your response EXACTLY as follows:
+
+    ### Skill Gap Analysis Summary
+    [1-2 sentence overview of main gaps]
+
+    ### Critical Missing Skills (Hard Skills)
+    - [Skill 1]: Explanation why this is important for the role
+    - [Skill 2]: Explanation why this is important for the role
+    (List 3-5 most critical technical skills missing)
+
+    ### Skills Needing Development (Soft Skills)
+    - [Skill 1]: How to develop this
+    - [Skill 2]: How to develop this
+    (List 2-3 soft skills needing work)
+
+    ### Recommended Learning Resources
+    - [Resource 1]: For [specific skill]
+    - [Resource 2]: For [specific skill]
+
+    DATA PROVIDED:
+    - Resume Content: {resume_context}
+    - Job Requirements: {job_posting_context}
+    - Additional Skills: {skills_context}
+
+    QUESTION: {question}
+
+    Provide only the structured response above. If information is missing, say "I need more information about [specific missing data]."""
+)
        
         # Cover letter prompt
         self.cover_letter_prompt = PromptTemplate.from_template(
@@ -414,7 +421,7 @@ class JobAssistant:
             search_type="similarity_score_threshold",
             search_kwargs={
                 "k": 5,
-                "score_threshold": 0.5,
+                "score_threshold": 0.25,
             },
         )
        
@@ -446,59 +453,34 @@ class JobAssistant:
             search_type="similarity_score_threshold",
             search_kwargs={
                 "k": 5,
-                "score_threshold": 0.5,
+                "score_threshold": 0.25,
             },
         )
        
         self.document_types["skills"] = True
    
-    @lru_cache(maxsize=3)
     def get_document_content(self, doc_type: str, query: str = "") -> str:
-        """Enhanced retrieval with multiple fallback strategies"""
-        retriever = getattr(self, f"{doc_type}_retriever", None)
-        if not retriever:
-            self.logger.warning(f"No retriever available for {doc_type}")
-            return ""
-    
+        """Enhanced retrieval with better error handling"""
         try:
-            strategies = [
-                lambda: retriever.invoke(query),  # Original query
-                lambda: retriever.invoke(self._expand_query(query)),  # Expanded query
-                lambda: retriever.invoke("key qualifications and requirements"),  # Generic
-                lambda: getattr(self, f"{doc_type}_store").similarity_search(" ", k=4)  # Fallback
-            ]
-            
-            docs = []
-            for strategy in strategies:
-                if len(docs) < 2:  # Minimum number of chunks we want
-                    try:
-                        result = strategy()
-                        if result:
-                            docs.extend(result if isinstance(result, list) else [result])
-                    except Exception as e:
-                        self.logger.debug(f"Retrieval strategy failed: {str(e)}")
-            
-            self.log_retrieval_stats(query, docs, doc_type)
-            
-            if not docs:
-                self.logger.warning(f"No documents retrieved for {doc_type} after all strategies")
-                return ""
-            
-            # Process and prioritize chunks
-            cleaned_chunks = []
-            for doc in docs[:8]:  # Limit to top 8 chunks
-                try:
-                    cleaned = self._clean_chunk(doc)
-                    if cleaned:
-                        cleaned_chunks.append(cleaned)
-                except Exception as e:
-                    self.logger.debug(f"Error cleaning chunk: {str(e)}")
-            
-            return "\n\n---\n\n".join(cleaned_chunks) if cleaned_chunks else ""
+            if doc_type == "resume" and self.resume_retriever:
+                docs = self.resume_retriever.invoke(query)
+                return "\n\n".join(self._clean_chunk(d) for d in docs[:3])
+                
+            elif doc_type == "job_posting" and self.job_posting_retriever:
+                docs = self.job_posting_retriever.invoke(query)
+                return "\n\n".join(self._clean_chunk(d) for d in docs[:3])
+                
+            elif doc_type == "skills" and self.skills_retriever:
+                docs = self.skills_retriever.invoke(query)
+                return "\n\n".join(self._clean_chunk(d) for d in docs[:3])
+                
+            return f"No {doc_type.replace('_', ' ')} content available"
             
         except Exception as e:
-            self.logger.error(f"Error retrieving {doc_type} content: {str(e)}", exc_info=True)
+            self.logger.error(f"Error retrieving {doc_type} content: {str(e)}")
             return ""
+  
+            
 
         
     def _clean_chunk(self, doc) -> str:
@@ -592,6 +574,9 @@ class JobAssistant:
             query: User's request for a cover letter
            
         Returns:
+        except Exception as e:
+            self.logger.error(f"Error retrieving {doc_type} content: {str(e)}", exc_info=True)
+            return ""
             A customized cover letter
         """
         if not all([self.document_types["resume"], self.document_types["job_posting"]]):
@@ -659,36 +644,37 @@ class JobAssistant:
   
 
     def ask(self, query: str, retries: int = 2) -> str:
-        """Enhanced query handling with retries and validation"""
-        self.logger.info(f"Processing query: '{query}'")
-        
-        # Validate input
-        query = query.strip()
-        if not query or len(query) < 5:
-            return "Please provide a more detailed question."
-        
-        # Check documents
-        if not any(self.document_types.values()):
-            return ("Please upload relevant documents first. I can help with:\n"
-                   "- Resume analysis (upload your resume)\n"
-                   "- Job matching (upload resume and job description)\n"
-                   "- Interview prep (upload job description)")
-        
-        # Try multiple times if needed
-        for attempt in range(retries + 1):
-            try:
-                response = self._process_query_attempt(query)
-                if self._validate_response(response):
-                    return self._post_process_response(response)
-                self.logger.warning(f"Poor response quality on attempt {attempt}")
-            except Exception as e:
-                self.logger.error(f"Attempt {attempt} failed: {str(e)}", exc_info=True)
-        
-        return ("I'm having trouble providing a quality response. "
-                "Please try:\n1. Rephrasing your question\n"
-                "2. Uploading more complete documents\n"
-                "3. Asking a more specific question")
-    
+        """Enhanced query handling with timeouts"""
+        try:
+            # Validate input
+            query = query.strip()
+            if not query or len(query) < 5:
+                return "Please provide a more detailed question."
+                
+            # Check documents
+            if not any(self.document_types.values()):
+                return ("Please upload relevant documents first. I can help with:\n"
+                    "- Resume analysis (upload your resume)\n"
+                    "- Job matching (upload resume and job description)\n"
+                    "- Interview prep (upload job description)")
+                
+            # Process with timeout
+            response = None
+            for attempt in range(retries + 1):
+                try:
+                    response = self._process_query_attempt(query)
+                    if response and len(response.split()) > 10:  # Basic validation
+                        return response
+                except Exception as e:
+                    self.logger.warning(f"Attempt {attempt} failed: {str(e)}")
+                    if attempt == retries:
+                        raise
+                    
+            return response or "I couldn't generate a response. Please try again."
+            
+        except Exception as e:
+            self.logger.error(f"Failed to process query: {str(e)}")
+            return "An error occurred while processing your request. Please try again."
 
     def log_retrieval_stats(self, query: str, docs: list, doc_type: str):
         """Log detailed retrieval statistics."""
@@ -778,20 +764,29 @@ class JobAssistant:
             return query  # Fallback to original query
     
     def _post_process_response(self, response: str) -> str:
-        """Clean and enhance the final response"""
-        # Fix common formatting issues
-        response = re.sub(r'(\n\s*){3,}', '\n\n', response)
-        response = re.sub(r'(?<!\n)\s*([\-•*])\s*', '\n\\1 ', response)
+        """Enhanced response cleaning and structuring"""
         
-        # Ensure proper capitalization
-        sentences = re.split(r'(?<=[.!?])\s+', response)
-        sentences = [s[0].upper() + s[1:] if s and s[0].islower() else s for s in sentences]
-        response = ' '.join(sentences)
+        # Ensure consistent section headers
+        response = re.sub(r'(?i)(\n\s*)(analysis|recommendations?|summary|key points)(\s*:\s*)', 
+                        lambda m: f"\n\n### {m.group(2).title()}\n", response)
         
-        # Remove hallucinated references
-        response = re.sub(r'\b(?:Note|Reference):.*$', '', response, flags=re.MULTILINE|re.IGNORECASE)
+        # Normalize bullet points
+        response = re.sub(r'(?<!\n)[•‣⁃*]\s*', '\n- ', response)
+        response = re.sub(r'(?<!\n)(\d+\.\s)', '\n\\1', response)
+        
+        # Ensure proper spacing around sections
+        response = re.sub(r'(\n\s*){3,}', '\n\n', response.strip())
+        
+        # Capitalize headings
+        response = re.sub(r'^(#+\s*\w+)', 
+                        lambda m: m.group(1).title(), 
+                        response, flags=re.MULTILINE)
+        
+        # Remove empty sections
+        response = re.sub(r'### [^\n]+\n\n+(?=###)', '', response)
         
         return response.strip()
+
     
 
     def _process_query_attempt(self, query: str) -> str:
@@ -838,37 +833,48 @@ class JobAssistant:
 
 
     def _classify_query(self, query: str) -> str:
-        """Better query classification using LLM"""
-        classifier_prompt = """Analyze this career-related question and classify its type:
+        """Better query classification with structure expectations"""
+        classifier_prompt = """Analyze this career question and classify its type, then specify the expected response structure:
         
         Question: {query}
         
-        Possible types:
-        - resume_improvement (requests about modifying/improving resume)
-        - missing_skills (asks about skills gaps)
-        - cover_letter (requests for cover letter help)
-        - interview_prep (asks about interview preparation)
-        - general (other career-related questions)
+        Types and Structures:
+        - resume_improvement: Should use ### Content Alignment, ### Keyword Optimization, ### Structural Improvements sections
+        - missing_skills: Should list skills in categories (Technical, Soft, etc.) with ### Critical Missing Skills section
+        - cover_letter: Should return properly formatted letter with [Date], [Address] blocks
+        - interview_prep: Should use ### Technical Questions, ### Behavioral Questions sections
+        - general: Should use ### Summary, ### Analysis, ### Recommendations sections
         
-        Return just the type label (no explanation):"""
+        Return only the type label:"""
         
         try:
             chain = PromptTemplate.from_template(classifier_prompt) | self.model | StrOutputParser()
             return chain.invoke({"query": query}).strip().lower()
-        except:
+        except Exception as e:
+            self.logger.error(f"Classification failed: {str(e)}")
             return "general"
 
     def _validate_response(self, response: str) -> bool:
-        """Check if response meets quality standards"""
+        """More lenient validation for skills queries"""
         if not response:
             return False
-        if len(response.split()) < 25:  # Too short
-            return False
-        if "I don't know" in response or "not provided" in response.lower():
-            return False
-        if response.count('\n') < 2 and len(response) > 300:  # Needs more structure
-            return False
-        return True
+            
+        # Skills-specific validation
+        if "skill" in response.lower():
+            required_phrases = [
+                "missing",
+                "recommend",
+                "develop",
+                "skill"
+            ]
+            if not all(phrase in response.lower() for phrase in required_phrases):
+                self.logger.debug("Rejected: Missing key skill analysis components")
+                return False
+                
+            return True
+        
+        # Default validation for other query types
+        return len(response.split()) > 25 and "\n" in response
 
     # Add to job_assistant.py
     def _sanitize_content(self, text: str) -> str:
@@ -913,3 +919,26 @@ class JobAssistant:
     
         return contact_info
 
+    def _default_retrieval(self, doc_type: str, query: str) -> str:
+        """Default retrieval method for document content"""
+        try:
+            if doc_type == "resume" and self.resume_retriever:
+                docs = self.resume_retriever.invoke(query)
+                self.log_retrieval_stats(query, docs, doc_type)
+                return "\n\n".join(self._clean_chunk(d) for d in docs[:3])
+                
+            elif doc_type == "job_posting" and self.job_posting_retriever:
+                docs = self.job_posting_retriever.invoke(query)
+                self.log_retrieval_stats(query, docs, doc_type)
+                return "\n\n".join(self._clean_chunk(d) for d in docs[:3])
+                
+            elif doc_type == "skills" and self.skills_retriever:
+                docs = self.skills_retriever.invoke(query)
+                self.log_retrieval_stats(query, docs, doc_type)
+                return "\n\n".join(self._clean_chunk(d) for d in docs[:3])
+                
+            return f"No content available for {doc_type}"
+            
+        except Exception as e:
+            self.logger.error(f"Error retrieving {doc_type} content: {str(e)}", exc_info=True)
+            return ""

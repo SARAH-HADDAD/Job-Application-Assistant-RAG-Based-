@@ -1,0 +1,50 @@
+2025-05-22 22:28:06,797 - JobAssistant - INFO - JobAssistant initialized
+2025-05-22 22:28:15,644 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmpe8vti7lf.pdf
+2025-05-22 22:28:15,725 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-22 22:28:42,623 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-22 22:29:35,492 - JobAssistant - INFO - Processing query: 'How can I improve my resume for this job?'
+2025-05-22 22:29:35,560 - JobAssistant - DEBUG - Retrieved 1 documents for resume
+2025-05-22 22:29:35,562 - JobAssistant - DEBUG - Document lengths (chars): [2139]
+2025-05-22 22:29:35,607 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 22:29:35,607 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488]
+2025-05-22 22:29:35,622 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 22:29:35,622 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488]
+2025-05-22 22:29:37,224 - JobAssistant - DEBUG - Classified query as: resume_improvement
+2025-05-22 22:29:37,238 - JobAssistant - DEBUG - Retrieved 1 documents for resume
+2025-05-22 22:29:37,238 - JobAssistant - DEBUG - Document lengths (chars): [2139]
+2025-05-22 22:29:37,263 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 22:29:37,263 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:29:37,314 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 22:29:37,314 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:29:47,571 - JobAssistant - DEBUG - Rejected: Missing key skill analysis components
+2025-05-22 22:29:47,571 - JobAssistant - WARNING - Poor response quality on attempt 0
+2025-05-22 22:29:47,600 - JobAssistant - DEBUG - Retrieved 1 documents for resume
+2025-05-22 22:29:47,600 - JobAssistant - DEBUG - Document lengths (chars): [2139]
+2025-05-22 22:29:47,641 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 22:29:47,641 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488]
+2025-05-22 22:29:47,685 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 22:29:47,685 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488]
+2025-05-22 22:29:47,885 - JobAssistant - DEBUG - Classified query as: resume_improvement
+2025-05-22 22:29:47,918 - JobAssistant - DEBUG - Retrieved 1 documents for resume
+2025-05-22 22:29:47,918 - JobAssistant - DEBUG - Document lengths (chars): [2139]
+2025-05-22 22:29:47,944 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 22:29:47,944 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:29:47,975 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 22:29:47,975 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:29:57,892 - JobAssistant - DEBUG - Rejected: Missing key skill analysis components
+2025-05-22 22:29:57,892 - JobAssistant - WARNING - Poor response quality on attempt 1
+2025-05-22 22:29:57,933 - JobAssistant - DEBUG - Retrieved 1 documents for resume
+2025-05-22 22:29:57,933 - JobAssistant - DEBUG - Document lengths (chars): [2139]
+2025-05-22 22:29:57,966 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 22:29:57,966 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488]
+2025-05-22 22:29:58,005 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 22:29:58,005 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488]
+2025-05-22 22:29:58,210 - JobAssistant - DEBUG - Classified query as: resume_improvement
+2025-05-22 22:29:58,243 - JobAssistant - DEBUG - Retrieved 1 documents for resume
+2025-05-22 22:29:58,243 - JobAssistant - DEBUG - Document lengths (chars): [2139]
+2025-05-22 22:29:58,270 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 22:29:58,270 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:29:58,292 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 22:29:58,292 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:30:09,579 - JobAssistant - DEBUG - Rejected: Missing key skill analysis components
+2025-05-22 22:30:09,579 - JobAssistant - WARNING - Poor response quality on attempt 2

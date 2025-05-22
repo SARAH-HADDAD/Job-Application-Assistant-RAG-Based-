@@ -1,0 +1,497 @@
+2025-05-22 20:55:30,999 - JobAssistant - INFO - JobAssistant initialized
+2025-05-22 20:55:36,819 - JobAssistant - INFO - Processing query: 'How can I improve my resume for this job?'
+2025-05-22 20:55:42,876 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmpz696r9z1.pdf
+2025-05-22 20:55:42,989 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-22 20:55:45,976 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-22 20:56:16,970 - JobAssistant - INFO - Processing query: 'How can I improve my resume for this job?'
+2025-05-22 20:56:17,110 - JobAssistant - DEBUG - Query expansion failed for 'How can I improve my resume for this job?': model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:17,163 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 20:56:17,163 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 20:56:17,275 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 20:56:17,275 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488]
+2025-05-22 20:56:17,335 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 20:56:17,335 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488]
+2025-05-22 20:56:17,339 - JobAssistant - DEBUG - Classified query as: general
+2025-05-22 20:56:17,341 - JobAssistant - ERROR - Attempt 0 failed: model "llama3" not found, try pulling it first (status code: 404)
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 680, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 847, in _process_query_attempt
+    return chain.invoke({"context": full_context, "question": query})
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 371, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 956, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 775, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1021, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 741, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 678, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 763, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 665, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\ollama\_client.py", line 168, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:17,381 - JobAssistant - DEBUG - Classified query as: general
+2025-05-22 20:56:17,383 - JobAssistant - ERROR - Attempt 1 failed: model "llama3" not found, try pulling it first (status code: 404)
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 680, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 847, in _process_query_attempt
+    return chain.invoke({"context": full_context, "question": query})
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 371, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 956, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 775, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1021, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 741, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 678, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 763, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 665, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\ollama\_client.py", line 168, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:17,389 - JobAssistant - DEBUG - Classified query as: general
+2025-05-22 20:56:17,391 - JobAssistant - ERROR - Attempt 2 failed: model "llama3" not found, try pulling it first (status code: 404)
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 680, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 847, in _process_query_attempt
+    return chain.invoke({"context": full_context, "question": query})
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 371, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 956, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 775, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1021, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 741, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 678, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 763, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 665, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\ollama\_client.py", line 168, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:23,654 - JobAssistant - INFO - Processing query: 'Help me prepare for an interview for this role'
+2025-05-22 20:56:23,734 - JobAssistant - DEBUG - Query expansion failed for 'Help me prepare for an interview for this role': model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:23,792 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 20:56:23,792 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 20:56:23,865 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 20:56:23,865 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488, 1067]
+2025-05-22 20:56:23,926 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 20:56:23,926 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2113, 2488, 1067]
+2025-05-22 20:56:23,929 - JobAssistant - DEBUG - Classified query as: general
+2025-05-22 20:56:23,931 - JobAssistant - ERROR - Attempt 0 failed: model "llama3" not found, try pulling it first (status code: 404)
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 680, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 847, in _process_query_attempt
+    return chain.invoke({"context": full_context, "question": query})
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 371, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 956, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 775, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1021, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 741, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 678, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 763, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 665, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\ollama\_client.py", line 168, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:23,961 - JobAssistant - DEBUG - Classified query as: general
+2025-05-22 20:56:23,963 - JobAssistant - ERROR - Attempt 1 failed: model "llama3" not found, try pulling it first (status code: 404)
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 680, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 847, in _process_query_attempt
+    return chain.invoke({"context": full_context, "question": query})
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 371, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 956, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 775, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1021, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 741, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 678, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 763, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 665, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\ollama\_client.py", line 168, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:23,968 - JobAssistant - DEBUG - Classified query as: general
+2025-05-22 20:56:23,970 - JobAssistant - ERROR - Attempt 2 failed: model "llama3" not found, try pulling it first (status code: 404)
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 680, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 847, in _process_query_attempt
+    return chain.invoke({"context": full_context, "question": query})
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 371, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 956, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 775, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1021, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 741, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 678, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 763, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 665, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\ollama\_client.py", line 168, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:30,340 - JobAssistant - INFO - Processing query: 'Generate a cover letter for this job application'
+2025-05-22 20:56:30,403 - JobAssistant - DEBUG - Query expansion failed for 'Generate a cover letter for this job application': model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:30,423 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 20:56:30,423 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 20:56:30,491 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 20:56:30,491 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1574, 2488, 1067]
+2025-05-22 20:56:30,638 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 20:56:30,638 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1574, 2488, 1067]
+2025-05-22 20:56:30,641 - JobAssistant - DEBUG - Classified query as: general
+2025-05-22 20:56:30,643 - JobAssistant - ERROR - Attempt 0 failed: model "llama3" not found, try pulling it first (status code: 404)
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 680, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 847, in _process_query_attempt
+    return chain.invoke({"context": full_context, "question": query})
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 371, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 956, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 775, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1021, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 741, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 678, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 763, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 665, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\ollama\_client.py", line 168, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:30,665 - JobAssistant - DEBUG - Classified query as: general
+2025-05-22 20:56:30,667 - JobAssistant - ERROR - Attempt 1 failed: model "llama3" not found, try pulling it first (status code: 404)
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 680, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 847, in _process_query_attempt
+    return chain.invoke({"context": full_context, "question": query})
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 371, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 956, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 775, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1021, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 741, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 678, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 763, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 665, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\ollama\_client.py", line 168, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-22 20:56:30,672 - JobAssistant - DEBUG - Classified query as: general
+2025-05-22 20:56:30,675 - JobAssistant - ERROR - Attempt 2 failed: model "llama3" not found, try pulling it first (status code: 404)
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 680, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 847, in _process_query_attempt
+    return chain.invoke({"context": full_context, "question": query})
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 371, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 956, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 775, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1021, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 741, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 678, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 763, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\langchain_ollama\chat_models.py", line 665, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "C:\Users\MSI\AppData\Local\Programs\Python\Python313\Lib\site-packages\ollama\_client.py", line 168, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model "llama3" not found, try pulling it first (status code: 404)

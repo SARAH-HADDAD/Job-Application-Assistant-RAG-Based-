@@ -1,0 +1,50 @@
+2025-05-22 22:13:28,434 - JobAssistant - INFO - JobAssistant initialized
+2025-05-22 22:13:39,081 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmpad0wzeu9.pdf
+2025-05-22 22:13:39,189 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-22 22:13:48,004 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-22 22:15:41,498 - JobAssistant - INFO - Processing query: 'What skills am I missing for this position?'
+2025-05-22 22:15:45,682 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 22:15:45,684 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 22:15:45,765 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 22:15:45,765 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2488, 2113, 1067]
+2025-05-22 22:15:45,779 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 22:15:45,779 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2488, 2113, 1067]
+2025-05-22 22:15:45,954 - JobAssistant - DEBUG - Classified query as: missing_skills
+2025-05-22 22:15:45,998 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 22:15:45,998 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 22:15:46,009 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 22:15:46,009 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:15:46,056 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 22:15:46,056 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:16:00,680 - JobAssistant - DEBUG - Rejected: Long response lacks headings
+2025-05-22 22:16:00,680 - JobAssistant - WARNING - Poor response quality on attempt 0
+2025-05-22 22:16:04,486 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 22:16:04,486 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 22:16:04,551 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 22:16:04,552 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2488, 2113, 1067]
+2025-05-22 22:16:04,647 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 22:16:04,647 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2488, 2113, 1067]
+2025-05-22 22:16:04,821 - JobAssistant - DEBUG - Classified query as: missing_skills
+2025-05-22 22:16:04,890 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 22:16:04,890 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 22:16:04,934 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 22:16:04,935 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:16:04,999 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 22:16:05,000 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:16:19,454 - JobAssistant - DEBUG - Rejected: Long response lacks headings
+2025-05-22 22:16:19,454 - JobAssistant - WARNING - Poor response quality on attempt 1
+2025-05-22 22:16:23,403 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 22:16:23,403 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 22:16:23,468 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 22:16:23,469 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2488, 2113, 1067]
+2025-05-22 22:16:23,531 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 22:16:23,531 - JobAssistant - DEBUG - Document lengths (chars): [1574, 2488, 2113, 1067]
+2025-05-22 22:16:23,703 - JobAssistant - DEBUG - Classified query as: missing_skills
+2025-05-22 22:16:23,771 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 22:16:23,771 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 22:16:23,816 - JobAssistant - DEBUG - Retrieved 3 documents for job_posting
+2025-05-22 22:16:23,816 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:16:23,856 - JobAssistant - DEBUG - Retrieved 3 documents for skills
+2025-05-22 22:16:23,856 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488]
+2025-05-22 22:16:37,301 - JobAssistant - DEBUG - Rejected: Long response lacks headings
+2025-05-22 22:16:37,301 - JobAssistant - WARNING - Poor response quality on attempt 2

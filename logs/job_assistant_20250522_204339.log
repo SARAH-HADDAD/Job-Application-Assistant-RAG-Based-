@@ -1,0 +1,18 @@
+2025-05-22 20:43:39,834 - JobAssistant - INFO - JobAssistant initialized
+2025-05-22 20:43:47,388 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmp7ks0lqv6.pdf
+2025-05-22 20:43:47,504 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-22 20:43:51,370 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-22 20:44:58,015 - JobAssistant - INFO - Processing query: 'Help me prepare for an interview for this role'
+2025-05-22 20:45:03,032 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 20:45:03,034 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 20:45:06,376 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 20:45:06,376 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:45:10,213 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 20:45:10,213 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:45:10,355 - JobAssistant - DEBUG - Classified query as: interview_prep
+2025-05-22 20:45:10,429 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 20:45:10,429 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 20:45:10,807 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 20:45:10,807 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:45:11,205 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 20:45:11,206 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]

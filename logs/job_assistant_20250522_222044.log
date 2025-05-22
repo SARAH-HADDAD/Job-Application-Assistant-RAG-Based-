@@ -1,0 +1,35 @@
+2025-05-22 22:20:44,043 - JobAssistant - INFO - JobAssistant initialized
+2025-05-22 22:21:00,481 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmp2k4o6dhl.pdf
+2025-05-22 22:21:00,559 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-22 22:21:03,989 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-22 22:24:28,955 - JobAssistant - INFO - Processing query: 'How can I improve my resume for this job?'
+2025-05-22 22:24:28,955 - JobAssistant - ERROR - Attempt 0 failed: 'JobAssistant' object has no attribute '_default_retrieval'
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 671, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 803, in _process_query_attempt
+    resume_content = self.get_document_content("resume", query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 486, in get_document_content
+    return self._default_retrieval(doc_type, query)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'JobAssistant' object has no attribute '_default_retrieval'
+2025-05-22 22:24:28,960 - JobAssistant - ERROR - Attempt 1 failed: 'JobAssistant' object has no attribute '_default_retrieval'
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 671, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 803, in _process_query_attempt
+    resume_content = self.get_document_content("resume", query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 486, in get_document_content
+    return self._default_retrieval(doc_type, query)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'JobAssistant' object has no attribute '_default_retrieval'
+2025-05-22 22:24:28,962 - JobAssistant - ERROR - Attempt 2 failed: 'JobAssistant' object has no attribute '_default_retrieval'
+Traceback (most recent call last):
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 671, in ask
+    response = self._process_query_attempt(query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 803, in _process_query_attempt
+    resume_content = self.get_document_content("resume", query)
+  File "C:\Users\MSI\Documents\GitHub\Job-Application-Assistant-RAG-Based-\job_assistant.py", line 486, in get_document_content
+    return self._default_retrieval(doc_type, query)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'JobAssistant' object has no attribute '_default_retrieval'
