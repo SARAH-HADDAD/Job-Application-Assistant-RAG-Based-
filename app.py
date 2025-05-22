@@ -44,18 +44,25 @@ def process_input():
 
 # Handle file uploads
 def handle_resume_upload():
-    if st.session_state["resume_uploader"]:
-        file = st.session_state["resume_uploader"]
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tf:
-            tf.write(file.getbuffer())
-            file_path = tf.name
-       
-        with st.spinner(f"Analyzing resume: {file.name}"):
-            st.session_state["assistant"].ingest_resume(file_path)
-       
-        os.remove(file_path)
-        st.session_state["uploaded_files"]["resume"] = file.name
-        st.success(f"Resume uploaded: {file.name}")
+    try:
+        if st.session_state["resume_uploader"]:
+            file = st.session_state["resume_uploader"]
+            if file.size > 5*1024*1024:  # 5MB limit
+                raise ValueError("File size too large (max 5MB)")
+            
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tf:
+                tf.write(file.getbuffer())
+                file_path = tf.name
+            
+            with st.spinner(f"Analyzing resume: {file.name}"):
+                st.session_state["assistant"].ingest_resume(file_path)
+            
+            os.remove(file_path)
+            st.session_state["uploaded_files"]["resume"] = file.name
+            st.toast(f"Resume uploaded: {file.name}", icon="✅")
+    except Exception as e:
+        st.error(f"Failed to process resume: {str(e)}")
+        st.session_state["uploaded_files"]["resume"] = None
 
 def handle_job_posting_upload():
     if st.session_state["job_posting_uploader"]:
@@ -107,6 +114,19 @@ def main():
    
     st.title("💼 AI Job Application Assistant")
    
+    # Example questions
+    with st.expander("💡 Example Questions"):
+        examples = [
+            "How can I improve my resume for this job?",
+            "What skills am I missing for this position?",
+            "Generate a cover letter for this job application",
+            "Help me prepare for an interview for this role"
+        ]
+        for ex in examples:
+            if st.button(ex, use_container_width=True):
+                st.session_state["user_input"] = ex
+                process_input()
+                
     # Create sidebar for file uploads
     with st.sidebar:
         st.header("Upload Documents")

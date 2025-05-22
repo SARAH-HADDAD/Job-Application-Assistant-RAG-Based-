@@ -1,0 +1,33 @@
+2025-05-22 20:21:06,244 - JobAssistant - INFO - JobAssistant initialized
+2025-05-22 20:21:13,110 - JobAssistant - INFO - Processing query: 'What skills am I missing for this position?'
+2025-05-22 20:21:33,854 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmpmv2ea1_p.pdf
+2025-05-22 20:21:34,019 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-22 20:21:37,763 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-22 20:21:59,967 - JobAssistant - INFO - Processing query: 'What skills am I missing for this position?'
+2025-05-22 20:22:00,163 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 20:22:00,164 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 20:22:00,513 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 20:22:00,513 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:22:00,918 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 20:22:00,918 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:22:06,819 - JobAssistant - DEBUG - Classified query as: missing_skills
+2025-05-22 20:22:08,149 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 20:22:08,149 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 20:22:09,876 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 20:22:09,876 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:22:11,421 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 20:22:11,421 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:23:47,882 - JobAssistant - INFO - Processing query: 'How can I improve my resume for this job?'
+2025-05-22 20:23:48,022 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 20:23:48,022 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 20:23:48,335 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 20:23:48,335 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:23:48,848 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 20:23:48,849 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:23:49,357 - JobAssistant - DEBUG - Classified query as: resume_improvement
+2025-05-22 20:23:51,150 - JobAssistant - DEBUG - Retrieved 2 documents for resume
+2025-05-22 20:23:51,150 - JobAssistant - DEBUG - Document lengths (chars): [2139, 2139]
+2025-05-22 20:23:56,490 - JobAssistant - DEBUG - Retrieved 4 documents for job_posting
+2025-05-22 20:23:56,490 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]
+2025-05-22 20:23:59,497 - JobAssistant - DEBUG - Retrieved 4 documents for skills
+2025-05-22 20:23:59,497 - JobAssistant - DEBUG - Document lengths (chars): [2113, 1067, 2488, 1574]

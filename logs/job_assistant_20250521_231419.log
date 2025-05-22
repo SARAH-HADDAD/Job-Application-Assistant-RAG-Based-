@@ -5,3 +5,5 @@
 2025-05-21 23:15:01,260 - JobAssistant - INFO - Routing to general question handling
 2025-05-21 23:17:03,780 - JobAssistant - INFO - Processing query: How can I prepare for the interview?
 2025-05-21 23:17:03,782 - JobAssistant - INFO - Routing to interview preparation
+2025-05-21 23:45:03,063 - JobAssistant - INFO - Processing query: what do you think about my resume
+2025-05-21 23:45:03,063 - JobAssistant - INFO - Routing to general question handling
