@@ -1,0 +1,8 @@
+2025-05-23 20:19:46,519 - JobAssistant - INFO - JobAssistant initialized
+2025-05-23 20:20:01,842 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmp_i1topza.pdf
+2025-05-23 20:20:01,982 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-23 20:20:06,870 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-23 20:20:37,795 - JobAssistant - DEBUG - Classified query as: resume_improvement
+2025-05-23 20:21:45,975 - JobAssistant - DEBUG - Classified query as: missing_skills
+2025-05-23 20:23:31,937 - JobAssistant - DEBUG - Classified query as: cover_letter
+2025-05-23 20:23:59,749 - JobAssistant - DEBUG - Classified query as: interview_prep

@@ -1,0 +1,6 @@
+2025-05-23 20:29:44,216 - JobAssistant - INFO - JobAssistant initialized
+2025-05-23 20:29:55,057 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmps5trnads.pdf
+2025-05-23 20:29:55,200 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-23 20:29:59,429 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-23 20:30:35,219 - JobAssistant - DEBUG - Classified query as: resume_improvement
+2025-05-23 20:32:38,195 - JobAssistant - DEBUG - Classified query as: interview_prep

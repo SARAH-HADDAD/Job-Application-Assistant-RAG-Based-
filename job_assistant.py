@@ -97,7 +97,7 @@ class JobAssistant:
     """As a professional career advisor, provide a response structured as follows:
     
     ### Summary
-    [1-2 sentence overview]
+    [1-3 sentence overview]
     
     ### Detailed Analysis
     [Several paragraphs or bullet points]
@@ -118,24 +118,49 @@ class JobAssistant:
        
         # Enhanced resume improvement prompt
         self.resume_improvement_prompt = PromptTemplate.from_template(
-    """As an executive resume writer, analyze this resume against the job requirements and provide 
-    specific, actionable recommendations. Structure your response EXACTLY as follows:
+    """Role: Act as an expert executive resume writer with 10+ years of experience. 
+    Critically analyze the provided resume against the job requirements and deliver concise, high-impact recommendations to optimize the resume.
 
-    ### Executive Summary
-    [1-2 sentence overview of key improvement opportunities]
+    Response Format (Follow Exactly):
 
-    ### Content Alignment
-    - **Missing Requirements**: [list 3-5 key items]
-    - **Experiences to Emphasize**: [list 3-5 items]
-    - **Quantifiable Achievements**: [suggest 2-3 metrics to add]
+    [Brief Summary]
+    *(1-3 sentences summarizing the biggest gaps and opportunities for improvement.)*
 
-    ### Keyword Optimization
-    - **Key Terms to Include**: [list 5-8 terms from job description]
-    - **Technical Skills Highlight**: [suggest 3-5 skills to feature]
+    1. Missing Requirements *(2-7 critical items from the job description that are absent or underdeveloped.)*
 
-    ### Structural Improvements
-    - **Section Reorganization**: [suggest 2-3 changes]
-    - **Visual Presentation**: [1-2 suggestions]
+[Specific skill, certification, or experience]
+
+[Another missing element]
+
+2. Experiences to Emphasize *(2-7 existing resume items that should be strengthened or repositioned to better match the role.)*
+
+[Relevant experience to highlight]
+
+[Another experience to expand]
+
+3. Quantifiable Achievements *(2-5 measurable results to add—think $, %, time, efficiency gains.)*
+
+"Increased revenue by X%" → "Boosted revenue by 27% in 6 months by…"
+
+[Another metric suggestion]
+
+4. Key Terms to Include *(3-8 exact keywords/phrases from the job description for ATS optimization.)*
+
+[Keyword 1]
+
+[Keyword 2]
+
+5. Technical Skills to Highlight *(2-7 hard skills/tech tools to feature more prominently.)*
+
+[Skill 1]
+
+[Skill 2]
+
+6. Section Reorganization *(2-7 structural changes—e.g., move "Leadership" before "Education," merge redundant sections.)*
+
+[Change 1]
+
+[Change 2]
 
     JOB REQUIREMENTS:
     {job_posting_context}
@@ -146,7 +171,16 @@ class JobAssistant:
     USER REQUEST:
     {question}
 
-    Provide only the structured response described above:"""
+    Rules:
+
+Be brutally honest—omit fluff and focus on actionable fixes.
+
+Prioritize specificity (avoid vague advice like "improve clarity").
+
+Use bullet points only (no paragraphs).
+
+Do not rewrite the resume—only provide recommendations.
+"""
 )
  
 
@@ -155,21 +189,22 @@ class JobAssistant:
     """As a career expert, analyze these documents to identify skill gaps. Structure your response EXACTLY as follows:
 
     ### Skill Gap Analysis Summary
-    [1-2 sentence overview of main gaps]
+    [1-3 sentence overview of main gaps]
 
     ### Critical Missing Skills (Hard Skills)
     - [Skill 1]: Explanation why this is important for the role
     - [Skill 2]: Explanation why this is important for the role
-    (List 3-5 most critical technical skills missing)
+    (List 1-7 most critical technical skills missing)
 
     ### Skills Needing Development (Soft Skills)
     - [Skill 1]: How to develop this
     - [Skill 2]: How to develop this
-    (List 2-3 soft skills needing work)
+    (List 1-5 soft skills needing work)
 
     ### Recommended Learning Resources
     - [Resource 1]: For [specific skill]
     - [Resource 2]: For [specific skill]
+    (List 1-5 Learning Resources)
 
     DATA PROVIDED:
     - Resume Content: {resume_context}
