@@ -21,7 +21,7 @@ from langchain_core.runnables import RunnableSequence
 
 class JobAssistant:
    
-    def __init__(self, model_name="mistral"):
+    def __init__(self, model_name="llama3:8b"):
 
         self._setup_logging()
 

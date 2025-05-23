@@ -1,0 +1,14 @@
+2025-05-23 17:40:45,466 - JobAssistant - INFO - JobAssistant initialized
+2025-05-23 17:40:52,712 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmpx40f7i1v.pdf
+2025-05-23 17:40:52,850 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-23 17:40:58,104 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-23 17:41:29,928 - JobAssistant - ERROR - Classification failed: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-23 17:41:29,931 - JobAssistant - DEBUG - Classified query as: general
+2025-05-23 17:41:29,934 - JobAssistant - WARNING - Attempt 0 failed: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-23 17:41:30,124 - JobAssistant - ERROR - Classification failed: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-23 17:41:30,190 - JobAssistant - DEBUG - Classified query as: general
+2025-05-23 17:41:30,193 - JobAssistant - WARNING - Attempt 1 failed: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-23 17:41:30,608 - JobAssistant - ERROR - Classification failed: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-23 17:41:30,609 - JobAssistant - DEBUG - Classified query as: general
+2025-05-23 17:41:30,611 - JobAssistant - WARNING - Attempt 2 failed: model "llama3" not found, try pulling it first (status code: 404)
+2025-05-23 17:41:30,611 - JobAssistant - ERROR - Failed to process query: model "llama3" not found, try pulling it first (status code: 404)

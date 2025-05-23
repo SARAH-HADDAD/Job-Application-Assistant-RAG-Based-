@@ -4,3 +4,4 @@
 2025-05-22 22:33:43,745 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
 2025-05-22 22:34:52,297 - JobAssistant - DEBUG - Classified query as: resume_improvement
 2025-05-22 22:35:56,861 - JobAssistant - DEBUG - Classified query as: missing_skills
+2025-05-22 22:36:53,063 - JobAssistant - DEBUG - Classified query as: interview_prep
