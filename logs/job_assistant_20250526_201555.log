@@ -1,0 +1,4 @@
+2025-05-26 20:15:55,548 - JobAssistant - INFO - JobAssistant initialized
+2025-05-26 20:16:00,332 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmp24t67tu0.pdf
+2025-05-26 20:16:00,410 - JobAssistant - DEBUG - Created 2 chunks from resume
+2025-05-26 20:16:07,034 - JobAssistant - INFO - Successfully ingested resume with 2 chunks

@@ -1,0 +1,10 @@
+2025-05-26 19:54:11,914 - JobAssistant - INFO - JobAssistant initialized
+2025-05-26 19:54:27,534 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmpv11rtbv_.pdf
+2025-05-26 19:54:27,702 - JobAssistant - DEBUG - Created 1 chunks from resume
+2025-05-26 19:54:32,241 - JobAssistant - INFO - Successfully ingested resume with 1 chunks
+2025-05-26 20:00:56,236 - JobAssistant - DEBUG - Classified query as: resume_improvement
+2025-05-26 20:02:02,302 - JobAssistant - INFO - JobAssistant initialized
+2025-05-26 20:11:16,896 - JobAssistant - INFO - JobAssistant initialized
+2025-05-26 20:13:29,747 - JobAssistant - INFO - Starting resume ingestion from: C:\Users\MSI\AppData\Local\Temp\tmpa_lhyhjv.pdf
+2025-05-26 20:13:29,797 - JobAssistant - DEBUG - Created 2 chunks from resume
+2025-05-26 20:13:35,316 - JobAssistant - INFO - Successfully ingested resume with 2 chunks

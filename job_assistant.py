@@ -126,37 +126,37 @@ class JobAssistant:
     [Brief Summary]
     *(1-3 sentences summarizing the biggest gaps and opportunities for improvement.)*
 
-    1. Missing Requirements *(2-7 critical items from the job description that are absent or underdeveloped.)*
+    1. Missing Requirements *(critical items from the job description that are absent or underdeveloped.)*
 
 [Specific skill, certification, or experience]
 
 [Another missing element]
 
-2. Experiences to Emphasize *(2-7 existing resume items that should be strengthened or repositioned to better match the role.)*
+2. Experiences to Emphasize *(existing resume items that should be strengthened or repositioned to better match the role.)*
 
 [Relevant experience to highlight]
 
 [Another experience to expand]
 
-3. Quantifiable Achievements *(2-5 measurable results to add—think $, %, time, efficiency gains.)*
+3. Quantifiable Achievements *(measurable results to add—think $, %, time, efficiency gains.)*
 
 "Increased revenue by X%" → "Boosted revenue by 27% in 6 months by…"
 
 [Another metric suggestion]
 
-4. Key Terms to Include *(3-8 exact keywords/phrases from the job description for ATS optimization.)*
+4. Key Terms to Include *(exact keywords/phrases from the job description for ATS optimization.)*
 
 [Keyword 1]
 
 [Keyword 2]
 
-5. Technical Skills to Highlight *(2-7 hard skills/tech tools to feature more prominently.)*
+5. Technical Skills to Highlight *(hard skills/tech tools to feature more prominently.)*
 
 [Skill 1]
 
 [Skill 2]
 
-6. Section Reorganization *(2-7 structural changes—e.g., move "Leadership" before "Education," merge redundant sections.)*
+6. Section Reorganization *(structural changes—e.g., move "Leadership" before "Education," merge redundant sections.)*
 
 [Change 1]
 
@@ -194,17 +194,17 @@ Do not rewrite the resume—only provide recommendations.
     ### Critical Missing Skills (Hard Skills)
     - [Skill 1]: Explanation why this is important for the role
     - [Skill 2]: Explanation why this is important for the role
-    (List 1-7 most critical technical skills missing)
+    (List the most critical technical skills missing)
 
     ### Skills Needing Development (Soft Skills)
     - [Skill 1]: How to develop this
     - [Skill 2]: How to develop this
-    (List 1-5 soft skills needing work)
+    (List some soft skills needing work)
 
     ### Recommended Learning Resources
     - [Resource 1]: For [specific skill]
     - [Resource 2]: For [specific skill]
-    (List 1-5 Learning Resources)
+    (List Learning Resources)
 
     DATA PROVIDED:
     - Resume Content: {resume_context}
@@ -436,7 +436,8 @@ Do not rewrite the resume—only provide recommendations.
         if file_path.lower().endswith('.pdf'):
             docs = PyPDFLoader(file_path=file_path).load()
         else:
-            docs = TextLoader(file_path=file_path).load()
+            docs = TextLoader(file_path=file_path, encoding="utf-8").load()
+
            
         chunks = self.text_splitter.split_documents(docs)
         chunks = filter_complex_metadata(chunks)
@@ -469,7 +470,8 @@ Do not rewrite the resume—only provide recommendations.
         Args:
             file_path: Path to the skills text file
         """
-        docs = TextLoader(file_path=file_path).load()
+        docs = TextLoader(file_path=file_path, encoding="utf-8").load()
+
         chunks = self.text_splitter.split_documents(docs)
         chunks = filter_complex_metadata(chunks)
        
