@@ -1,13 +1,10 @@
 import os
-import tempfile
 import re
 import logging
 from datetime import datetime
 import uuid
-from typing import List, Dict, Any, Optional, Tuple
 from functools import lru_cache
 
-# LangChain imports
 from langchain_community.vectorstores import Chroma
 from langchain_ollama import ChatOllama
 from langchain_community.embeddings import FastEmbedEmbeddings
@@ -25,15 +22,13 @@ class JobAssistant:
 
         self._setup_logging()
 
-        # Initialize LLM model with better parameters
         self.model = ChatOllama(
             model=model_name,
-            temperature=0.3,  # More focused responses
-            top_p=0.9,        # Better response quality
+            temperature=0.7,  
+            top_p=0.9,       
             repeat_penalty=1.1  # Reduce repetition
         )
 
-        # Improved text splitting
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=2500,
             chunk_overlap=400,
@@ -41,24 +36,22 @@ class JobAssistant:
             length_function=len
         )
        
-        # Document stores
         self.resume_store = None
         self.job_posting_store = None
         self.skills_store = None
        
-        # Retrievers
         self.resume_retriever = None
         self.job_posting_retriever = None
         self.skills_retriever = None
        
-        # Initialize document types
+
         self.document_types = {
             "resume": False,
             "job_posting": False,
             "skills": False
         }
        
-        # Initialize prompts
+
         self._initialize_prompts()
 
     def _setup_logging(self):
@@ -66,24 +59,19 @@ class JobAssistant:
         self.logger = logging.getLogger("JobAssistant")
         self.logger.setLevel(logging.DEBUG)
     
-        # Create logs directory if it doesn't exist
         os.makedirs("logs", exist_ok=True)
     
-        # Create file handler which logs even debug messages
         log_file = f"logs/job_assistant_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
         fh = logging.FileHandler(log_file)
         fh.setLevel(logging.DEBUG)
-    
-        # Create console handler with a higher log level
+
         ch = logging.StreamHandler()
         ch.setLevel(logging.INFO)
     
-        # Create formatter and add it to the handlers
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         fh.setFormatter(formatter)
         ch.setFormatter(formatter)
     
-        # Add the handlers to the logger
         self.logger.addHandler(fh)
         self.logger.addHandler(ch)
     
@@ -92,12 +80,12 @@ class JobAssistant:
     
     def _initialize_prompts(self):
         """Initialize various prompt templates for different tasks."""
-        # Enhanced general QA prompt
+
         self.qa_prompt = PromptTemplate.from_template(
     """As a professional career advisor, provide a response structured as follows:
     
     ### Summary
-    [1-3 sentence overview]
+    [1-4 sentence overview]
     
     ### Detailed Analysis
     [Several paragraphs or bullet points]
@@ -124,7 +112,7 @@ class JobAssistant:
     Response Format (Follow Exactly):
 
     [Brief Summary]
-    *(1-3 sentences summarizing the biggest gaps and opportunities for improvement.)*
+    *(1-4 sentences summarizing the biggest gaps and opportunities for improvement.)*
 
     1. Missing Requirements *(critical items from the job description that are absent or underdeveloped.)*
 
@@ -140,7 +128,6 @@ class JobAssistant:
 
 3. Quantifiable Achievements *(measurable results to add—think $, %, time, efficiency gains.)*
 
-"Increased revenue by X%" → "Boosted revenue by 27% in 6 months by…"
 
 [Another metric suggestion]
 
@@ -184,7 +171,7 @@ Do not rewrite the resume—only provide recommendations.
 )
  
 
-        # Missing skills prompt
+
         self.missing_skills_prompt = PromptTemplate.from_template(
     """As a career expert, analyze these documents to identify skill gaps. Structure your response EXACTLY as follows:
 
@@ -216,7 +203,7 @@ Do not rewrite the resume—only provide recommendations.
     Provide only the structured response above. If information is missing, say "I need more information about [specific missing data]."""
 )
        
-        # Cover letter prompt
+
         self.cover_letter_prompt = PromptTemplate.from_template(
             """You are an expert cover letter writer. Create a customized cover letter based on the candidate's
             resume and the job posting.
@@ -240,7 +227,7 @@ Do not rewrite the resume—only provide recommendations.
             Answer:"""
         )
        
-        # Interview preparation prompt
+
         self.interview_prep_prompt = PromptTemplate.from_template(
             """You are an interview preparation coach. Based on the resume and job posting, provide advice on how
             the candidate should prepare for an interview for this position.
@@ -280,9 +267,7 @@ Do not rewrite the resume—only provide recommendations.
         self.logger.info(f"Starting resume ingestion from: {file_path}")
     
         try:
-            # ======================
-            # 1. File Validation
-            # ======================
+
             if not os.path.exists(file_path):
                 raise ValueError(f"File not found: {file_path}")
             
@@ -295,9 +280,7 @@ Do not rewrite the resume—only provide recommendations.
             if file_size < 1024:  # 1KB minimum
                 raise ValueError("Resume file appears too small to be valid")
 
-            # ======================
-            # 2. Document Loading
-            # ======================
+
             loader = PyPDFLoader(
                 file_path=file_path,
                 extract_images=False,  # Disable image extraction for performance
@@ -309,9 +292,6 @@ Do not rewrite the resume—only provide recommendations.
             except Exception as load_error:
                 raise ValueError(f"Failed to parse PDF: {str(load_error)}") from load_error
 
-            # ======================
-            # 3. Content Validation
-            # ======================
             if not docs:
                 raise ValueError("The resume appears to be empty or unreadable")
             
@@ -322,9 +302,6 @@ Do not rewrite the resume—only provide recommendations.
             if not any(word in total_content.lower() for word in ["experience", "education", "skills"]):
                 self.logger.warning("Resume missing common sections - may be low quality")
 
-            # ======================
-            # 4. Enhanced Preprocessing
-            # ======================
             processed_docs = []
             for doc in docs:
                 # Clean and sanitize content
@@ -349,9 +326,9 @@ Do not rewrite the resume—only provide recommendations.
 
                 processed_docs.append(doc)
 
-            # ======================
-            # 5. Chunking Strategy
-            # ======================
+
+            #  Chunking Strategy
+
             chunks = self.text_splitter.split_documents(processed_docs)
             chunks = filter_complex_metadata(chunks)
         
@@ -360,9 +337,7 @@ Do not rewrite the resume—only provide recommendations.
 
             self.logger.debug(f"Created {len(chunks)} chunks from resume")
 
-            # ======================
-            # 6. Enhanced Metadata
-            # ======================
+
             for i, chunk in enumerate(chunks):
                 chunk.metadata.update({
                     "document_type": "resume",
@@ -374,9 +349,8 @@ Do not rewrite the resume—only provide recommendations.
                     "content_length": len(chunk.page_content)
                 })
 
-            # ======================
-            # 7. Vector Store Creation
-            # ======================
+            # Vector Store Creation
+
             try:
                 self.resume_store = Chroma.from_documents(
                     documents=chunks,
@@ -442,7 +416,7 @@ Do not rewrite the resume—only provide recommendations.
         chunks = self.text_splitter.split_documents(docs)
         chunks = filter_complex_metadata(chunks)
        
-        # Add document type metadata
+    
         for chunk in chunks:
             if "metadata" not in chunk.__dict__:
                 chunk.metadata = {}
@@ -531,15 +505,7 @@ Do not rewrite the resume—only provide recommendations.
         return self._clean_text(content)
   
     def improve_resume(self, query: str) -> str:
-        """
-        Provide advice on how to improve the resume for the specific job.
-       
-        Args:
-            query: User's question about resume improvement
-           
-        Returns:
-            Advice on improving the resume
-        """
+
         if not all([self.document_types["resume"], self.document_types["job_posting"]]):
             missing = []
             if not self.document_types["resume"]:
@@ -567,15 +533,7 @@ Do not rewrite the resume—only provide recommendations.
         return response
    
     def identify_missing_skills(self, query: str) -> str:
-        """
-        Identify skills that are missing based on the job posting.
-       
-        Args:
-            query: User's question about missing skills
-           
-        Returns:
-            Analysis of missing skills
-        """
+
         if not all([self.document_types["resume"], self.document_types["job_posting"]]):
             missing = []
             if not self.document_types["resume"]:
@@ -604,18 +562,7 @@ Do not rewrite the resume—only provide recommendations.
         return response
    
     def create_cover_letter(self, query: str) -> str:
-        """
-        Create a customized cover letter based on the resume and job posting.
-       
-        Args:
-            query: User's request for a cover letter
-           
-        Returns:
-        except Exception as e:
-            self.logger.error(f"Error retrieving {doc_type} content: {str(e)}", exc_info=True)
-            return ""
-            A customized cover letter
-        """
+
         if not all([self.document_types["resume"], self.document_types["job_posting"]]):
             missing = []
             if not self.document_types["resume"]:
@@ -624,7 +571,7 @@ Do not rewrite the resume—only provide recommendations.
                 missing.append("job posting")
             return f"Please upload the missing documents: {', '.join(missing)}."
        
-        # Get document contents
+
         resume_content = self.get_document_content("resume")
         job_posting_content = self.get_document_content("job_posting")
         skills_content = self.get_document_content("skills") if self.document_types["skills"] else "No skills profile provided."
@@ -644,15 +591,7 @@ Do not rewrite the resume—only provide recommendations.
         return response
    
     def prepare_for_interview(self, query: str) -> str:
-        """
-        Provide advice on how to prepare for an interview for this job.
-       
-        Args:
-            query: User's question about interview preparation
-           
-        Returns:
-            Interview preparation advice
-        """
+
         if not all([self.document_types["resume"], self.document_types["job_posting"]]):
             missing = []
             if not self.document_types["resume"]:
@@ -721,7 +660,6 @@ Do not rewrite the resume—only provide recommendations.
     
         self.logger.debug(f"Retrieved {len(docs)} documents for {doc_type}")
     
-        # Log scores if available
         if hasattr(docs[0], 'metadata') and 'score' in docs[0].metadata:
             scores = [doc.metadata.get('score', 'N/A') for doc in docs]
             self.logger.debug(f"Retrieval scores for {doc_type}: {scores}")
@@ -737,12 +675,6 @@ Do not rewrite the resume—only provide recommendations.
         """
         Enhance the query with alternative phrasings using LLM for better retrieval.
         
-        Args:
-            query: The original user query
-            
-        Returns:
-            Expanded query with alternative phrasings if helpful,
-            otherwise returns original query
         """
         # Don't expand very short or empty queries
         query = query.strip()
@@ -828,7 +760,7 @@ Do not rewrite the resume—only provide recommendations.
 
     def _process_query_attempt(self, query: str) -> str:
         """Single attempt at processing a query"""
-        # Get relevant context from all documents
+
         context_parts = []
         
         if self.document_types["resume"]:

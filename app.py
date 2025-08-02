@@ -4,14 +4,14 @@ import streamlit as st
 from streamlit_chat import message
 from job_assistant import JobAssistant
 
-# Page configuration
+
 st.set_page_config(
     page_title="AI Job Assistant",
     page_icon="💼",
     layout="wide"
 )
 
-# Initialize session state
+
 def initialize_session_state():
     if "messages" not in st.session_state:
         st.session_state["messages"] = []
@@ -26,12 +26,12 @@ def initialize_session_state():
             "skills": None
         }
 
-# Display chat messages
+
 def display_messages():
     for i, (msg, is_user) in enumerate(st.session_state["messages"]):
         message(msg, is_user=is_user, key=str(i))
 
-# Process user input
+
 def process_input():
     if st.session_state["user_input"] and len(st.session_state["user_input"].strip()) > 0:
         user_text = st.session_state["user_input"].strip()
@@ -94,11 +94,11 @@ def handle_skills_upload():
         st.session_state["uploaded_files"]["skills"] = file.name
         st.success(f"Skills profile uploaded: {file.name}")
 
-# Clear conversation history
+
 def clear_conversation():
     st.session_state["messages"] = []
 
-# Reset everything
+
 def reset_everything():
     st.session_state["messages"] = []
     st.session_state["assistant"] = JobAssistant()
@@ -108,13 +108,13 @@ def reset_everything():
         "skills": None
     }
 
-# Main function to render the UI
+
 def main():
     initialize_session_state()
    
     st.title("💼 AI Job Application Assistant")
    
-    # Example questions
+
     with st.expander("💡 Example Questions"):
         examples = [
             "How can I improve my resume for this job?",
@@ -127,7 +127,7 @@ def main():
                 st.session_state["user_input"] = ex
                 process_input()
                 
-    # Create sidebar for file uploads
+
     with st.sidebar:
         st.header("Upload Documents")
        
@@ -174,13 +174,13 @@ def main():
             if st.button("Reset All"):
                 reset_everything()
    
-    # Chat area
+
     st.subheader("Chat with your Job Assistant")
    
-    # Display chat messages
+
     display_messages()
    
-    # User input
+
     user_input = st.text_input(
         "Ask a question about your job application...",
         key="user_input",
@@ -188,7 +188,7 @@ def main():
         value=st.session_state.get("user_input", "")
     )
    
-    # Upload status
+
     col1, col2, col3 = st.columns(3)
     with col1:
         resume_status = "✅" if st.session_state["uploaded_files"]["resume"] else "❌"
